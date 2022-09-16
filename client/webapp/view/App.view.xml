@@ -1,0 +1,41 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:unified="sap.ui.unified" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:f="sap.f" controllerName="sap.ui.demo.todo.controller.App" displayBlock="true">
+		<App>
+			<Page>
+				<content>
+					<Panel id="datePanel" headerText="Book an appointment" width="auto">
+						<Input name="name" class="nameInput" id="nameInput" placeholder="Your name" />
+						<Input name="surname" class="surnameInput" id="surnameInput" placeholder="Your surname" />
+						<Label text="Please select convenient time for you" labelFor="DP1"/>
+						<DateTimePicker name="date" id="DP1" placeholder="Enter Date" change="handleChange" class="sapUiSmallMarginBottom"/>
+						<Button text="Submit" press="onPress"></Button> 
+					</Panel>
+					<Text text="{/alert}"></Text>
+					<PlanningCalendar
+					id="PC1"
+					startDate="{path: '/startDate'}"
+					rows="{path: '/people'}"
+					appointmentsVisualization="Filled"
+					appointmentSelect="handleAppointmentSelect"
+					showEmptyIntervalHeaders="false"
+					showWeekNumbers="true">	
+						<rows>
+							<PlanningCalendarRow				
+								title="{name}"				
+								appointments="{path : 'appointments', templateShareable: true}">				
+								<appointments>
+									<unified:CalendarAppointment
+										startDate="{start}"
+										endDate="{end}"							
+										title="{title}"
+										text="{info}"
+										type="{type}"
+										tentative="{tentative}">
+									</unified:CalendarAppointment>
+								</appointments>					
+							</PlanningCalendarRow>
+						</rows>
+					</PlanningCalendar>	
+				</content>
+			</Page>
+		</App>
+</mvc:View>

@@ -24,6 +24,8 @@ app.use(function (req, res, next) {
   next();
 });
 
+require("./routes/routes")(app);
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client", "build")));
 
