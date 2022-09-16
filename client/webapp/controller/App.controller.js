@@ -60,11 +60,12 @@ sap.ui.define(
 						return data.json();
 					})
 					.then((item) => {
-						const appointmentByPatientName = item.appointments.find(
-							(appointment) =>
-								appointment.name === nameFromInput &&
-								appointment.surname === surnameFromInput
-						);
+						const appointmentByPatientName =
+							item.appointments.filter(
+								(appointment) =>
+									appointment.name === nameFromInput &&
+									appointment.surname === surnameFromInput
+							);
 
 						const appointmentsBySelectedDate =
 							item.appointments.some(
@@ -72,21 +73,27 @@ sap.ui.define(
 									Date.parse(appointment.date) === inputDate
 							);
 
-						const weekNumberFromAppointmentDate = new Date(
-							appointmentByPatientName.date
-						).getWeek();
-
-						if (weekNumberFromAppointmentDate === chosenWeek) {
-							const oModel = this.getView().getModel();
-							oModel.setProperty(
-								"/alert",
-								"You have an appointment this week, please select another week"
+						const weekNumberFromAppointmentDate =
+							appointmentByPatientName.map((slot) =>
+								new Date(slot.date).getWeek()
 							);
-						} else if (appointmentsBySelectedDate) {
+
+						const patientChosenSameWeek =
+							weekNumberFromAppointmentDate.some(
+								(item) => item === chosenWeek
+							);
+
+						if (appointmentsBySelectedDate) {
 							const oModel = this.getView().getModel();
 							oModel.setProperty(
 								"/alert",
 								"This appoint time has been booked, please select another time"
+							);
+						} else if (patientChosenSameWeek) {
+							const oModel = this.getView().getModel();
+							oModel.setProperty(
+								"/alert",
+								"You have an appointment this week, please select another week"
 							);
 						} else {
 							fetch(

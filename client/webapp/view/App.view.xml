@@ -2,6 +2,7 @@
 		<App>
 			<Page>
 				<content>
+					<!-- APPOINTMENT INPUT -->
 					<Panel id="datePanel" headerText="Book an appointment" width="auto">
 						<Input name="name" class="nameInput" id="nameInput" placeholder="Your name" />
 						<Input name="surname" class="surnameInput" id="surnameInput" placeholder="Your surname" />
@@ -10,6 +11,7 @@
 						<Button text="Submit" press="onPress"></Button> 
 					</Panel>
 					<Text text="{/alert}"></Text>
+					<!-- CALENDAR -->
 					<PlanningCalendar
 					id="PC1"
 					startDate="{path: '/startDate'}"
